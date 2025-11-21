@@ -58,11 +58,6 @@
 			path = TriangleAppTests;
 			sourceTree = "<group>";
 		};
-		8224C2132ECF111D00AACDEA /* TriangleAppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TriangleAppUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +91,6 @@
 				82352CD52ED0103E002C40AB /* codemagic.yaml */,
 				8224C1F22ECF111B00AACDEA /* TriangleApp */,
 				8224C2092ECF111C00AACDEA /* TriangleAppTests */,
-				8224C2132ECF111D00AACDEA /* TriangleAppUITests */,
 				8224C1F12ECF111B00AACDEA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -171,9 +165,6 @@
 			);
 			dependencies = (
 				8224C2122ECF111D00AACDEA /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				8224C2132ECF111D00AACDEA /* TriangleAppUITests */,
 			);
 			name = TriangleAppUITests;
 			packageProductDependencies = (
