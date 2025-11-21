@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		82352CD62ED01045002C40AB /* codemagic.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 82352CD52ED0103E002C40AB /* codemagic.yaml */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		8224C2072ECF111C00AACDEA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		8224C1F02ECF111B00AACDEA /* TriangleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TriangleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8224C2062ECF111C00AACDEA /* TriangleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TriangleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8224C2102ECF111D00AACDEA /* TriangleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TriangleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		82352CD52ED0103E002C40AB /* codemagic.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = codemagic.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +93,7 @@
 		8224C1E72ECF111B00AACDEA = {
 			isa = PBXGroup;
 			children = (
+				82352CD52ED0103E002C40AB /* codemagic.yaml */,
 				8224C1F22ECF111B00AACDEA /* TriangleApp */,
 				8224C2092ECF111C00AACDEA /* TriangleAppTests */,
 				8224C2132ECF111D00AACDEA /* TriangleAppUITests */,
@@ -225,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82352CD62ED01045002C40AB /* codemagic.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
