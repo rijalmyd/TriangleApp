@@ -1,29 +1,68 @@
 workflows:
-  ios-project-debug: # workflow ID
-    name: iOS debug # workflow name
+  ios-project-debug:
+    name: iOS debug
     environment:
       xcode: latest
       cocoapods: default
       vars:
-          XCODE_PROJECT: "TriangleApp.xcodeproj" # Isikan nama project Anda.
-          XCODE_SCHEME: "TriangleApp" # Isikan nama scheme project Anda.
+        XCODE_PROJECT: "TriangleApp.xcodeproj"
+        XCODE_SCHEME: "TriangleApp"
+        SIM_DEVICE: "iPhone 16 Plus"
+        SIM_OS: "18.5"
+
     scripts:
-      - name: Run tests
+      - name: Prepare Simulator for iOS 18.5 (Erase, Boot, Warm-up)
+        script: |
+          echo "Available runtimes:"
+          xcrun simctl list runtimes
+
+          SIM_UDID=$(xcrun simctl list devices | grep "${SIM_DEVICE} (" | grep "${SIM_OS}" | sed -E 's/.*\(([-A-F0-9]+)\).*/\1/')
+          echo "Selected device UDID: $SIM_UDID"
+
+          echo "Shutting down simulator if running..."
+          xcrun simctl shutdown "$SIM_UDID" || true
+
+          echo "Erasing simulator..."
+          xcrun simctl erase "$SIM_UDID"
+
+          echo "Booting simulator..."
+          xcrun simctl boot "$SIM_UDID" || true
+
+          echo "Waiting for boot to complete..."
+          xcrun simctl bootstatus "$SIM_UDID" -b
+
+          echo "Warm-up delay to allow AX system to load (iOS 18 needs this)..."
+          sleep 25
+
+          echo "Simulator is ready."
+
+      - name: Run tests on iOS 18.5
         script: |
           xcodebuild \
-          -project "$XCODE_PROJECT" \
-          -scheme "$XCODE_SCHEME" \
-          -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 16 Plus,OS=18.5' \
-          clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+            -project "$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
+            -sdk iphonesimulator \
+            -destination "platform=iOS Simulator,name=${SIM_DEVICE},OS=${SIM_OS}" \
+            clean build test \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            XCT_WAIT_FOR_DEBUGGER=0 \
+            UI_TESTS_DISABLE_ANIMATIONS=YES \
+            XCTOOL_WAIT_FOR_ACCESSIBILITY=1
+
       - name: Build debug app
         script: |
-          xcodebuild build -project "$XCODE_PROJECT" \
-          -scheme "$XCODE_SCHEME" \
-          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          xcodebuild build \
+            -project "$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
     artifacts:
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+
     publishing:
       email:
         recipients:
-          - muhyidinrijal@gmail.com # Isikan email untuk notifikasi status building.
+          - muhyidinrijal@gmail.com
